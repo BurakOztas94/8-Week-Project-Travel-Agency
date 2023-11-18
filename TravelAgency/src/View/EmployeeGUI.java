@@ -22,6 +22,7 @@ public class EmployeeGUI extends JFrame {
     private JTable tbl_hotel_type_list;
     private JTable tbl_hotel_season_list;
     private JTable tbl_hotel_list;
+    private JButton tbl_hotel_refresh;
 
     DefaultTableModel mdl_hotel_list;
     private  Object[] row_hotel_list;
@@ -62,7 +63,15 @@ public class EmployeeGUI extends JFrame {
 
 
             btn_hotel_add.addActionListener (e -> {
-                                HotelAddGUI hoteladd=new HotelAddGUI (employee);
+            HotelAddGUI hoteladd=new HotelAddGUI (employee);
+
+
+
+
+            });
+
+            tbl_hotel_refresh.addActionListener (e -> {
+                loadHotelModel ();
             });
 
 
@@ -71,9 +80,10 @@ public class EmployeeGUI extends JFrame {
             });
 
 
+
         }
 
-    private void loadHotelModel ()
+    public void loadHotelModel ()
         {
             DefaultTableModel clearModel=(DefaultTableModel) tbl_hotel_list.getModel();
             clearModel.setRowCount (0);

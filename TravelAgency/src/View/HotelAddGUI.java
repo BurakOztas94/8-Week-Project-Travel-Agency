@@ -76,6 +76,7 @@ public class HotelAddGUI extends JFrame {
                        Hotel addedHotel=Hotel.getFetch(email);
                        added_hotel_id=addedHotel.getId ();
 
+                        dispose ();
                     }
 
                 }
