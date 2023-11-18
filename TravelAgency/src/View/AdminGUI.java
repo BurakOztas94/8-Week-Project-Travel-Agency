@@ -169,6 +169,32 @@ public class AdminGUI extends JFrame {
                     }
             });
 
+            tbl_user_list.getSelectionModel ().addListSelectionListener (e -> {
+
+                try
+                    {
+                        String select_user_name = tbl_user_list.getValueAt
+                                (tbl_user_list.getSelectedRow () , 1).toString ();
+                        fld_update_uname.setText (select_user_name);
+                    } catch (Exception exception)
+                    {
+                        System.out.println (exception.getMessage ());
+                    }
+            });
+
+            tbl_user_list.getSelectionModel ().addListSelectionListener (e -> {
+
+                try
+                    {
+                        String select_user_uname = tbl_user_list.getValueAt
+                                (tbl_user_list.getSelectedRow () , 2).toString ();
+                        fld_update_name.setText (select_user_uname);
+                    } catch (Exception exception)
+                    {
+                        System.out.println (exception.getMessage ());
+                    }
+            });
+
 
             bttn_update.addActionListener (e -> {
 
@@ -192,7 +218,10 @@ public class AdminGUI extends JFrame {
                     {
                         Helper.showMsg ("done");
                         loadUserModel ();
-                        fld_update_user_id.setText("");     //Clicking the 'Update ID' button clears.
+                        fld_update_user_id.setText("");
+                        fld_update_name.setText("");
+                        fld_update_uname.setText("");
+                        fld_update_pass.setText("");
                     }
                 else
                     {
