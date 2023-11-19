@@ -196,5 +196,23 @@ public class Hotel {
             return true;
         }
 
+    public static boolean delete (int id)
+        {
+            String query = "DELETE FROM hotel WHERE id = ?";
+
+            try
+                {
+                    PreparedStatement pr = DBConnect.getInstance ().prepareStatement (query);
+                    pr.setInt (1 , id);
+                    return pr.executeUpdate () != -1;
+                } catch (SQLException e)
+                {
+                    e.printStackTrace ();
+                }
+            return true;
+
+        }
+
+
 
 }

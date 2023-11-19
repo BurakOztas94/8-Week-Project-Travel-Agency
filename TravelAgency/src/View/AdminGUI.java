@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 
+
+//7. değerlendirme formu
 public class AdminGUI extends JFrame {
 
     private JPanel panel1;
@@ -121,6 +123,9 @@ public class AdminGUI extends JFrame {
                                 Helper.showMsg ("done");
                                 loadUserModel ();
                                 fld_user_del_id.setText (null);
+                                fld_update_name.setText("");
+                                fld_update_uname.setText("");
+                                fld_update_pass.setText("");
 
                             }
 
@@ -141,7 +146,7 @@ public class AdminGUI extends JFrame {
                         fld_user_del_id.setText (select_user_id);
                     } catch (Exception exception)
                     {
-                        System.out.println (exception.getMessage ());
+                        System.out.println (" ");
                     }
             });
 
@@ -165,7 +170,7 @@ public class AdminGUI extends JFrame {
                         fld_update_user_id.setText (select_user_id);
                     } catch (Exception exception)
                     {
-                        System.out.println (exception.getMessage ());
+                        System.out.println (" ");
                     }
             });
 
@@ -178,7 +183,7 @@ public class AdminGUI extends JFrame {
                         fld_update_uname.setText (select_user_name);
                     } catch (Exception exception)
                     {
-                        System.out.println (exception.getMessage ());
+                        System.out.println (" ");
                     }
             });
 
@@ -191,7 +196,7 @@ public class AdminGUI extends JFrame {
                         fld_update_name.setText (select_user_uname);
                     } catch (Exception exception)
                     {
-                        System.out.println (exception.getMessage ());
+                        System.out.println (" ");
                     }
             });
 

@@ -103,7 +103,9 @@ public class Helper {
                     type="Room Only";
                     break;
                 case"7":
-                    type="Ultra (Alcohol Excluded)";
+                    type="Ultra - Alcohol Excluded";
+                    break;
+                default:
                     break;
             }
             return type;

@@ -261,7 +261,7 @@ public class User {
     public static boolean delete (int id)
         {
             String query = "DELETE FROM user WHERE id = ?";
-            //  ArrayList<Course> courseArrayList = Course.getListByUser(id);
+
             try
                 {
                     PreparedStatement pr = DBConnect.getInstance ().prepareStatement (query);
