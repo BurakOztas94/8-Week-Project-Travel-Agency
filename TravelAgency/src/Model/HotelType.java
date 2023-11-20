@@ -118,6 +118,30 @@ public class HotelType {
             return obj;
         }
 
+    public static HotelType getFetchByID (int id)
+        {
+            HotelType obj =null;
+            String query = "SELECT * FROM type_hotel WHERE id = ?";
+            try {
+                PreparedStatement pr = DBConnect.getInstance().prepareStatement(query);
+                pr.setInt(1,id);
+                ResultSet rs = pr.executeQuery();
+                if (rs.next()) {
+                    obj = new HotelType ();
+                    obj.setId (rs.getInt("id"));
+                    obj.setType (rs.getString("type"));
+                    obj.setHotelId (rs.getInt("hotel_id"));
+
+
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return obj;
+        }
+
     public static boolean add ( String type ,  int hotel_id )
         {
             String query = "INSERT INTO type_hotel (type,hotel_id) VALUES (?,?)";
@@ -159,5 +183,34 @@ public class HotelType {
             return true;
 
         }
+
+    public static ArrayList<HotelType> getListByHotelID (int id)
+        {
+            ArrayList<HotelType> hotelTypList =new ArrayList<> ();
+            HotelType obj;
+            String query = "DELETE FROM type_hotel WHERE hotel_id = ?";
+            try
+                {
+                    PreparedStatement pr = DBConnect.getInstance ().prepareStatement (query);
+                    pr.setInt (1 , id);
+                    ResultSet rs=pr.executeQuery ();
+                    while (rs.next ())
+                        {
+                            obj=new HotelType ();
+                            obj.setId (rs.getInt ("id"));
+                            obj.setType (rs.getString ("type"));
+                            obj.setHotelId (rs.getInt ("hotel_id"));
+                            hotelTypList.add (obj);
+
+                        }
+                } catch (SQLException e)
+                {
+                    e.printStackTrace ();
+                }
+            return hotelTypList;
+
+        }
+
+
 
 }

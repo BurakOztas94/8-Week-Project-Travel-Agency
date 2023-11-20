@@ -118,10 +118,10 @@ public class HotelSeason {
 
         }
 
-    public Hotel getFetch (int id)
+    public static HotelSeason getFetch (int id)
         {
-            Hotel obj = null;
-            String query = "SELECT * FROM hotel WHERE id = ?";
+            HotelSeason obj = null;
+            String query = "SELECT * FROM season WHERE id = ?";
             try
                 {
                     PreparedStatement pr = DBConnect.getInstance ().prepareStatement (query);
@@ -129,14 +129,13 @@ public class HotelSeason {
                     ResultSet rs = pr.executeQuery ();
                     if ( rs.next () )
                         {
-                            obj = new Hotel ();
-                            obj.setId (rs.getInt ("id"));
-                            obj.setName (rs.getString ("name"));
-                            obj.setStar (rs.getString ("star"));
-                            obj.setProperty (rs.getString ("property"));
-                            obj.setAddress (rs.getString ("address"));
-                            obj.setPhone (rs.getString ("phone"));
-                            obj.setEmail (rs.getString ("email"));
+                            obj = new HotelSeason ();
+                            obj.setHotelId (rs.getInt ("id"));
+                            obj.setSeasonName (rs.getString ("season_name"));
+                            obj.setSeasonStart (rs.getString ("season_start"));
+                            obj.setSeasonEnd (rs.getString ("season_end"));
+                            obj.setHotelId (rs.getInt ("hotel_id"));
+
 
                         }
 

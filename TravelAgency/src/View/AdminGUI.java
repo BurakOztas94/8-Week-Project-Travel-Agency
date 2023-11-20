@@ -36,7 +36,7 @@ public class AdminGUI extends JFrame {
     private JPanel pnl_name_surname;
     private JTextField fld_update_name;
     private JTextField fld_update_uname;
-    private JPasswordField fld_update_pass;
+    private JTextField fld_update_pass;
     private JComboBox cmb_update_type;
     private JButton bttn_update;
     private JTextField fld_update_user_id;
@@ -194,6 +194,19 @@ public class AdminGUI extends JFrame {
                         String select_user_uname = tbl_user_list.getValueAt
                                 (tbl_user_list.getSelectedRow () , 2).toString ();
                         fld_update_name.setText (select_user_uname);
+                    } catch (Exception exception)
+                    {
+                        System.out.println (" ");
+                    }
+            });
+
+            tbl_user_list.getSelectionModel ().addListSelectionListener (e -> {
+
+                try
+                    {
+                        String select_user_pass = tbl_user_list.getValueAt
+                                (tbl_user_list.getSelectedRow () , 3).toString ();
+                        fld_update_pass.setText (select_user_pass);
                     } catch (Exception exception)
                     {
                         System.out.println (" ");

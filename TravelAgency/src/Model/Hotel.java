@@ -161,6 +161,30 @@ public class Hotel {
             return obj;
 
         }
+    public static Hotel getFetchById (int id)
+        {
+            Hotel obj = null;
+            String query = "SELECT * FROM hotel WHERE id=?";
+
+            PreparedStatement pr = null;
+            try
+                {
+                    pr = DBConnect.getInstance ().prepareStatement (query);
+                    pr.setInt (1 , id);
+                    ResultSet rs = pr.executeQuery ();
+                    if ( rs.next () )
+                        {
+                            obj = new Hotel (rs.getInt ("id") , rs.getString ("name") , rs.getString ("star") , rs.getString ("property") , rs.getString ("address") , rs.getString ("phone") , rs.getString ("email"));
+
+
+                        }
+                } catch (SQLException e)
+                {
+                    e.printStackTrace ();
+                }
+            return obj;
+
+        }
 
     public static boolean add (String name , String star , String property , String address , String phone , String email)
         {

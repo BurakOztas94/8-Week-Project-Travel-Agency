@@ -6,11 +6,17 @@ import Model.Employee;
 import Model.Hotel;
 import Model.HotelSeason;
 import Model.HotelType;
+import Helper.DBConnect;
 
 import javax.swing.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class HotelAddGUI extends JFrame {
+
     private final Employee employee;
+
     private JPanel wrapper;
     private JTextField fld_hotel_name;
     private JComboBox cmb_hotel_star;
@@ -43,7 +49,7 @@ public class HotelAddGUI extends JFrame {
 
     public HotelAddGUI (Employee employee)
         {
-            this.employee = employee;
+            this.employee=employee;
             add (wrapper);
             setSize (800 , 600);
             setLocationRelativeTo (null);
@@ -152,10 +158,33 @@ public class HotelAddGUI extends JFrame {
                             }
 
 
-
-
         });
 
 
 }
+
+    public static Hotel getFetchById (int id)
+        {
+            Hotel obj = null;
+            String query = "SELECT * FROM hotel WHERE id=?";
+
+            PreparedStatement pr = null;
+            try
+                {
+                    pr = DBConnect.getInstance ().prepareStatement (query);
+                    pr.setInt (1 , id);
+                    ResultSet rs = pr.executeQuery ();
+                    if ( rs.next () )
+                        {
+                            obj = new Hotel (rs.getInt ("id") , rs.getString ("name") , rs.getString ("star") , rs.getString ("property") , rs.getString ("address") , rs.getString ("phone") , rs.getString ("email"));
+
+
+                        }
+                } catch (SQLException e)
+                {
+                    e.printStackTrace ();
+                }
+            return obj;
+
+        }
 }
