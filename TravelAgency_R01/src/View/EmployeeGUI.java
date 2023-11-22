@@ -6,8 +6,6 @@ import Helper.Helper;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
@@ -57,7 +55,10 @@ public class EmployeeGUI extends JFrame {
     private JTextField fld_room_price_id;
     private JButton btn_room_delete_price;
     private JTextField fld_room_search_region;
-    private JTable table1;
+    private JTable tbl_hotel_reservation;
+    private JScrollPane tbl_hotel_booking;
+    private JButton btn_book_del;
+    private JTextField fld_book__del_id;
 
     DefaultTableModel mdl_hotel_list;
     private Object[] row_hotel_list;
@@ -71,6 +72,9 @@ public class EmployeeGUI extends JFrame {
 
     private Object[] row_room_price_list;
     DefaultTableModel mdl_room_price_list;
+
+    private Object[] row_book_list;
+    DefaultTableModel mdl_book_list;
 
 
     public EmployeeGUI (Employee employee)
@@ -115,6 +119,7 @@ public class EmployeeGUI extends JFrame {
 
                     }
             };
+
             //type model
 
             Object[] col_type_list = {"Board ID" , "Board Name" , "Hotel ID " , "Hotel Name"};
@@ -161,6 +166,7 @@ public class EmployeeGUI extends JFrame {
                         return super.isCellEditable (row , column);
                     }
             };
+
             //type model
 
             Object[] col_price_list = {"Price ID" , "Room ID" , "Hotel ID" , "Board Name" , "Hotel Name" , "Room Name" ,
@@ -185,7 +191,9 @@ public class EmployeeGUI extends JFrame {
 
                     }
             };
+
             //Price List model
+
             Object[] col_season_list = {"Season ID" , "Season Name" , "Hotel Name " , "Season Start " , "Season End"};
             mdl_hotel_season_list.setColumnIdentifiers (col_season_list);
             row_hotel_season_list = new Object[col_season_list.length];
@@ -196,6 +204,7 @@ public class EmployeeGUI extends JFrame {
             loadSeasonModel ();
 
             // brings id for price List delete function
+
             tbl_hotel_list.getSelectionModel ().addListSelectionListener (e -> {
 
                 try
@@ -273,6 +282,7 @@ public class EmployeeGUI extends JFrame {
                     }
             });
 
+            //hotel add button
 
             btn_hotel_add.addActionListener (e -> {
                 HotelSeason season = null;
@@ -283,6 +293,7 @@ public class EmployeeGUI extends JFrame {
             });
 
             //refreshes button brings all tables
+
             tbl_hotel_refresh.addActionListener (e -> {
                 loadHotelModel ();
                 loadTypeModel ();
@@ -297,6 +308,7 @@ public class EmployeeGUI extends JFrame {
             });
 
             //update button
+
             btn_hotel_update.addActionListener (e -> {
 
                 try
@@ -318,6 +330,7 @@ public class EmployeeGUI extends JFrame {
 
 
             });
+            //hotel delete button
 
             btn_hotel_delete.addActionListener (e ->
 
@@ -381,7 +394,7 @@ public class EmployeeGUI extends JFrame {
                 dispose ();
             });
 
-
+                //season delete
             btn_delete_season.addActionListener (e -> {
 
 
@@ -411,6 +424,33 @@ public class EmployeeGUI extends JFrame {
                             }
                     }
             });
+
+// Booking List Table
+            mdl_book_list = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    if (column == 0)
+                        return false;
+                    return super.isCellEditable(row, column);
+
+                }
+            };
+
+            Object[] col_book_list = {"Book ID", "Room ID", "Guest Name", "Identity Number", "Age", "Phone", "Email",
+                    "Start Date", "End Date", "Adult Visitor", "Child Visitor", "Price", "Not"};
+            mdl_book_list.setColumnIdentifiers(col_book_list);
+            row_book_list = new Object[col_book_list.length];
+            loadBookModel();
+            tbl_hotel_reservation.setModel(mdl_book_list);
+            tbl_hotel_reservation.getTableHeader().setReorderingAllowed(false);
+            tbl_hotel_reservation.getColumnModel().getColumn(0).setMaxWidth(75);
+
+
+
+
+
+
+            //delete type
 
             btn_delete_type.addActionListener (e -> {
                 if ( Helper.isFieldEmpty (fld_delete_type) )
@@ -442,6 +482,8 @@ public class EmployeeGUI extends JFrame {
                     }
             });
 
+
+
             searchButton.addActionListener (e -> {
                 String hotel_name = fld_hotel_search_hotel_name.getText ();
                 String hotel_city = fld_hotel_search_hotel_city.getText ();
@@ -452,7 +494,7 @@ public class EmployeeGUI extends JFrame {
 
             });
 
-
+            //room search button
             btn_room_search.addActionListener (e -> {
                 String hotel_name = fld_room_search_name.getText ();
                 String hotel_city = fld_room_search_region.getText ();
@@ -635,6 +677,8 @@ public class EmployeeGUI extends JFrame {
 
             });
         }
+
+
 
     public void loadHotelModel (ArrayList<Hotel> list)
         {
@@ -843,6 +887,8 @@ public class EmployeeGUI extends JFrame {
                 }
 
 
+
+
         }
 
     // loadPriceModel(filterPriceList);
@@ -870,6 +916,13 @@ public class EmployeeGUI extends JFrame {
                     mdl_room_price_list.addRow (row_room_price_list);
 
                 }
+
+        }
+
+        //loadBookModel
+    private void loadBookModel ()
+        {
+
 
         }
 

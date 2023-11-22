@@ -1,5 +1,11 @@
 package Model;
 
+import Helper.Helper;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import Helper.DBConnect;
+
 public class Book {
 
     private int id;
@@ -31,6 +37,10 @@ public class Book {
         this.age = age;
         this.phone = phone;
         this.email = email;
+
+    }
+
+    public Book (){
 
     }
 
@@ -155,5 +165,57 @@ public class Book {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+    public static boolean add(Book book) {
+
+        String query = "INSERT INTO reservation (room_id,note,price,start_date,finish_date,adult_visitor,child_visitor," +
+                "name,identity_number,age,phone,email) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        try {
+            PreparedStatement pr = DBConnect.getInstance().prepareStatement(query);
+            pr.setInt(1, book.getRoom_id());
+            pr.setString(2, book.getNote());
+            pr.setInt(3, book.getPrice());
+            pr.setString(4, book.getStartDate());
+            pr.setString(5, book.getEndDate());
+            pr.setInt(6, book.getAdult_visitors());
+            pr.setInt(7, book.getChild_visitors());
+            pr.setString(8, book.getName());
+            pr.setString(9, book.getidentityNo());
+            pr.setInt(10, book.getAge());
+            pr.setString(11, book.getPhone());
+            pr.setString(12, book.getEmail());
+
+            int response = pr.executeUpdate();
+
+            if (response == -1) {
+                Helper.showMsg("error");
+            }
+            return response != -1;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        }
+        return true;
+    }
+
+    public static boolean delete (int id)
+        {
+            String query = "DELETE FROM reservation WHERE id = ? ";
+
+            try
+                {
+                    PreparedStatement pr = DBConnect.getInstance ().prepareStatement (query);
+                    pr.setInt (1 , id);
+                    return pr.executeUpdate () != -1;
+                } catch (SQLException e)
+                {
+                    e.printStackTrace ();
+                }
+            return true;
+
+        }
 
 }
