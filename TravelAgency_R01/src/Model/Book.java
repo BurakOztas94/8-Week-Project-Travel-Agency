@@ -3,7 +3,11 @@ package Model;
 import Helper.Helper;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 import Helper.DBConnect;
 
 public class Book {
@@ -201,6 +205,42 @@ public class Book {
         return true;
     }
 
+    public static ArrayList<Book> getList ()
+        {
+            ArrayList<Book> bookList = new ArrayList<> ();
+            String query = "SELECT * FROM reservation";
+            Book obj;
+            try
+                {
+                    Statement st = DBConnect.getInstance ().createStatement ();
+                    ResultSet rs = st.executeQuery (query);
+                    while (rs.next ())
+                        {
+                            obj = new Book ();
+                            obj.setId (rs.getInt ("id"));
+                            obj.setRoom_id (rs.getInt ("room_id"));
+                            obj.setNote (rs.getString ("note"));
+                            obj.setPrice (rs.getInt ("price"));
+                            obj.setStartDate (rs.getString ("start_date"));
+                            obj.setEndDate (rs.getString ("finish_date"));
+                            obj.setAdult_visitors (rs.getInt ("adult_visitor"));
+                            obj.setChild_visitors (rs.getInt ("child_visitor"));
+                            obj.setName (rs.getString ("name"));
+                            obj.setidentityNo (rs.getString ("identity_number"));
+                            obj.setAge (rs.getInt ("age"));
+                            obj.setPhone (rs.getString ("phone"));
+                            obj.setEmail (rs.getString ("email"));
+
+                            bookList.add (obj);
+                        }
+
+                } catch (SQLException e)
+                {
+                    e.printStackTrace ();
+                }
+            return bookList;
+
+        }
     public static boolean delete (int id)
         {
             String query = "DELETE FROM reservation WHERE id = ? ";

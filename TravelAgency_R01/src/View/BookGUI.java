@@ -90,7 +90,7 @@ public class BookGUI extends JFrame {
                         exception.printStackTrace ();
                     }
             });
-            //reservation add
+            //reservation add and stock reduce
             btn_book_save.addActionListener (e -> {
 
                 Book reservation = new Book (room_id , fld_book_book_note.getText () , Integer.parseInt (fld_book_total_price.getText ()) ,
@@ -100,7 +100,13 @@ public class BookGUI extends JFrame {
                         fld_book_guest_id.getText () , Integer.parseInt (fld_book_guest_age.getText ()) ,
                         fld_book_guest_phone.getText () , fld_book_guest_email.getText ());
                 if(Book.add(reservation)){
+
+
                     Helper.showMsg("Reservation added successfully!");
+                    Room roomStockUpdate = Room.getFetchById(room_id);
+                    roomStockUpdate.setStock(roomStockUpdate.getStock()-1);
+                    Room.update(roomStockUpdate);
+
                     dispose();
                 }else{
                     Helper.showMsg("Reservation could not be added!");

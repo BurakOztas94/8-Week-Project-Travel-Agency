@@ -6,6 +6,8 @@ import Helper.Helper;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
@@ -56,9 +58,10 @@ public class EmployeeGUI extends JFrame {
     private JButton btn_room_delete_price;
     private JTextField fld_room_search_region;
     private JTable tbl_hotel_reservation;
-    private JScrollPane tbl_hotel_booking;
+    private JScrollPane scrollPane;
     private JButton btn_book_del;
-    private JTextField fld_book__del_id;
+    private JTextField fld_book_del_id;
+    private JButton refreshTablesButton;
 
     DefaultTableModel mdl_hotel_list;
     private Object[] row_hotel_list;
@@ -669,12 +672,62 @@ public class EmployeeGUI extends JFrame {
                         RoomPrice price = RoomPrice.getFetchById (Integer.parseInt (fld_room_price_id.getText ()));
                         BookGUI bookGUI = new BookGUI (price);
 
+
                     } catch (Exception exception)
                     {
                         Helper.showMsg ("error");
                     }
 
 
+            });
+
+
+
+            tbl_hotel_reservation.getSelectionModel().addListSelectionListener(e -> {
+
+                try {
+                    String select_type_id = tbl_hotel_reservation.getValueAt
+                            (tbl_hotel_reservation.getSelectedRow(), 0).toString();
+                    fld_book_del_id.setText(select_type_id);
+                } catch (Exception exception) {
+                    System.out.println(" ");
+                }
+            });
+
+            //reservation delete
+
+            btn_book_del.addActionListener (e -> {
+                if (Helper.isFieldEmpty(fld_book_del_id)) {
+                    Helper.showMsg("fill");
+
+                } else
+                    {
+
+                        int bookId = Integer.parseInt (fld_book_del_id.getText ());
+
+                        if ( Helper.confirm ("sure") )
+                            {
+                                if ( Book.delete (bookId) )
+                                    {
+                                        Helper.showMsg ("done");
+                                        loadHotelModel ();
+                                        loadTypeModel ();
+                                        loadSeasonModel ();
+                                        fld_book_del_id.setText (null);
+                                        loadBookModel ();
+
+                                    }
+                                else
+                                    {
+                                        Helper.showMsg ("error");
+                                    }
+
+                            }
+
+
+                    }});
+            refreshTablesButton.addActionListener (e -> {
+                loadBookModel ();
             });
         }
 
@@ -920,10 +973,28 @@ public class EmployeeGUI extends JFrame {
         }
 
         //loadBookModel
-    private void loadBookModel ()
-        {
+        public void loadBookModel() {
+            DefaultTableModel clearModel = (DefaultTableModel) tbl_hotel_reservation.getModel ();
+            clearModel.setRowCount(0);
+            int i;
+            for (Book obj : Book.getList()) {
+                i = 0;
+                row_book_list[i++] = obj.getId();
+                row_book_list[i++] = obj.getRoom_id();
+                row_book_list[i++] = obj.getName();
+                row_book_list[i++] = obj.getidentityNo ();
+                row_book_list[i++] = obj.getAge();
+                row_book_list[i++] = obj.getPhone();
+                row_book_list[i++] = obj.getEmail();
+                row_book_list[i++] = obj.getStartDate();
+                row_book_list[i++] = obj.getEndDate();
+                row_book_list[i++] = obj.getAdult_visitors ();
+                row_book_list[i++] = obj.getChild_visitors ();
+                row_book_list[i++] = obj.getPrice ();
+                row_book_list[i++] = obj.getNote ();
 
-
+                mdl_book_list.addRow(row_book_list);
+            }
         }
 
 }
